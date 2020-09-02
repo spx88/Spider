@@ -5,6 +5,7 @@ import os
 
 
 class Login():
+
     def __init__(self):
         self.url = 'http://www.renren.com/SysHome.do'
         self.headers = {
@@ -24,7 +25,7 @@ class Login():
 
     # 验证码图片的下载函数
     def download(self, href, directory):
-        code_img_name = 'code1.jpg'
+        code_img_name = 'code2.jpg'
         code_img_path = directory + '/' + code_img_name
         code_img_data = requests.get(url=href, headers=self.headers).content
         with open(code_img_path, 'wb') as fp:
@@ -35,7 +36,7 @@ class Login():
 
     # 超级鹰对验证码图片进行识别
     def distinguish_code(self, code_img_path):
-        chaojiying = Chaojiying_Client('spx888', 'spx2622196', '907630')  # 用户中心>>软件ID 生成一个替换 96001
+        chaojiying = Chaojiying_Client('spx888', 'spx2622196135', '907630')  # 用户中心>>软件ID 生成一个替换 96001
         im = open(code_img_path, 'rb').read()  # 本地图片文件路径 来替换 a.jpg 有时WIN系统须要//
         # 输出是字典类型
         verification_dic = chaojiying.PostPic(im, 1902)  # 1902 验证码类型
@@ -57,14 +58,24 @@ class Login():
             ' rkey': ' 663b464e765f525c76e3f8081672a8cf',
             ' f': ' http%3A%2F%2Fwww.renren.com%2F975042080%2Fnewsfeed%2Fphoto',
         }
-        response = requests.post(url=self.login_url, headers=self.headers, data=data)
+        session = requests.Session()
+        response = session.post(url=self.login_url, headers=self.headers, data=data)
         # 输出响应状态码，检查模拟登陆是否成功，输出200即一切正常
-
         print(response.status_code)
         # login_page_text = response.text
         # # 将登陆成功的页面保存
         # with open('renren.html', 'w', encoding='utf-8') as fp:
         #     fp.write(login_page_text)
+        # 爬取登录后用户页面详情信息
+        detail_url = 'http://www.renren.com/975042080/profile'
+        # 手动Cookie处理
+        # Login.headers = {
+        #     'Cookie':    ''
+        # }
+        detail_page_text = session.get(url=detail_url, headers=self.headers).text
+        with open('spx.html', 'w', encoding='utf-8') as fp:
+            fp.write(detail_page_text)
+            print('用户详情页爬取成功！')
 
 
 if __name__ == '__main__':
