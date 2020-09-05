@@ -35,7 +35,7 @@ frame = i.crop(rangle)
 frame.save(code_img_name)
 
 # 将验证码图片提交给超级鹰进行识别
-chaojiying = Chaojiying_Client('spx888', 'spx2622196135', '907630')  # 用户中心>>软件ID 生成一个替换 96001
+chaojiying = Chaojiying_Client('xxx', 'xxx', 'xxx')  # 用户中心>>软件ID 生成一个替换 96001
 im = open('./code.png', 'rb').read()  # 本地图片文件路径 来替换 a.jpg 有时WIN系统须要//
 # 输出是字典,取值
 result = chaojiying.PostPic(im, 9004)['pic_str']
@@ -68,9 +68,9 @@ for l in all_list:
     ActionChains(bro).move_to_element_with_offset(code_img_ele, x, y).click().perform()
     time.sleep(0.5)
 
-bro.find_element_by_id('J-userName').send_keys('15234405680')
+bro.find_element_by_id('J-userName').send_keys('xxx')
 time.sleep(1)
-bro.find_element_by_id('J-password').send_keys('spx2622196')
+bro.find_element_by_id('J-password').send_keys('xxx')
 time.sleep(1)
 bro.find_element_by_id('J-login').click()
 time.sleep(1)
